@@ -1,0 +1,79 @@
+<!-- create-react-app 이 아닌 원시적인 방법으로 react 구성하기
+react로 programming을 하더라도 결과물은 JS와 html이어야 한다. -->
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>웹게임</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- 개발용 -->
+    <!-- <script 
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script> -->
+
+    <!-- 배포용 -->
+    <script
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- type이 text/babel인 곳에서 JSX를 찾아 React.createElement로 대체해 줌 -->
+    <script type="text/babel">
+      "use strict";
+
+      // component는 데이터와 화면을 하나로 묶어둔 덩어리를 뜻 함
+
+      class LikeButton extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = { liked: false };
+          // state가 데이터 부분에 해당 ( 화면에 바뀔 부분 )
+        }
+        render() {
+          if (this.state.liked) {
+            return "You liked this";
+          }
+          // 화면은 render의 return부분에 해당
+          // react가 해결하고자 했던 것? 데이터와 화면의 일치! > 데이터가 바뀌면 화면은 자동으로 바뀌게 되어 있음
+
+          // return React.createElement(
+          //   "button",
+          //   { onClick: () => this.setState({ liked: true }) },
+          //   "Like"
+          // );
+
+          // 복잡성 down 가독성 up을 위한 JSX 👇
+          return (
+            <button onClick={() => this.setState({ liked: true })}>Like</button>
+            // 💡 onClick에 화살표 함수 쓰는 이유 알아보기
+            // addEventListener('click', ()=> this.setState({liked:true}))
+          );
+          // script내에 이런 형태의 문법은 사용할 수 없음 스크린샷참조 'Uncaught SyntaxError: Unexpected token '<''
+          // 이를 도와주는게 바벨 라이브러리 React.createElement로 대체해줌
+        }
+      }
+
+      // const LikeButton = () => {};
+      // function LikeButton() {}
+    </script>
+    <script type="text/babel">
+      // ReactDOM.render(<LikeButton />, document.querySelector('#root')) // React 17 버전
+      ReactDOM.createRoot(document.querySelector("#root")).render(
+        <LikeButton />
+      );
+      // LikeButton이라는 component를 root안에 그린다는 뜻
+      // JSX는 React.createElement(LikeButton)을 <LikeButton/>으로 바꿔쓸 수 있다
+    </script>
+  </body>
+</html>
