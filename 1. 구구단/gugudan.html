@@ -58,7 +58,13 @@
                 first: Math.ceil(Math.random() * 9),
                 second: Math.ceil(Math.random() * 9),
                 value: "",
-                result: prevState.value + " ✅ 정답!",
+                result:
+                  prevState.first +
+                  "ｘ" +
+                  prevState.second +
+                  "＝" +
+                  prevState.value +
+                  " ✅ 정답!",
               };
             });
           } else {
@@ -74,6 +80,12 @@
 
         onChange = (e) => this.setState({ value: e.target.value });
 
+        onRefInput = (c) => {
+          this.input = c;
+        };
+
+        // render는 state가 변경될때 마다 실행되기 때문에 그 때 마다의 함수 렌더는 불필요하므로 분리
+
         render() {
           return (
             <React.Fragment>
@@ -81,9 +93,7 @@
               <form onSubmit={this.onSubmit}>
                 <input
                   type="number"
-                  ref={(c) => {
-                    this.input = c;
-                  }}
+                  ref={this.onRefInput}
                   value={this.state.value}
                   onChange={this.onChange}
                 />
