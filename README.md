@@ -12,7 +12,9 @@
 - [ ] [8. 💥 지뢰찾기](https://github.com/DevSeulgi/react-webgame#8--지뢰찾기)
 
 ## 1. 9️⃣ 구구단
-
+<p>
+  <img src='1.%20%EA%B5%AC%EA%B5%AC%EB%8B%A8/preview.gif' width=480>
+</p>
 
 #### ✨ Features
   ```
