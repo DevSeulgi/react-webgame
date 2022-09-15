@@ -1,10 +1,7 @@
-<!-- create-react-app 이 아닌 원시적인 방법으로 react 구성하기
-react로 programming을 하더라도 결과물은 JS와 html이어야 한다. -->
-
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>웹게임</title>
+    <title>9️⃣ 구구단</title>
   </head>
   <body>
     <div id="root"></div>
@@ -28,33 +25,72 @@ react로 programming을 하더라도 결과물은 JS와 html이어야 한다. --
       crossorigin
     ></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <!-- type이 text/babel인 곳에서 JSX를 찾아 React.createElement로 대체해 줌 -->
     <script type="text/babel">
       "use strict";
 
-      function LikeButton() {
-        const [liked, setLiked] = React.useState(false);
-        if (liked) {
-          return "You liked this";
+      class GuGuDan extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            first: Math.ceil(Math.random() * 9),
+            // 첫번째 수
+            second: Math.ceil(Math.random() * 9),
+            // 두번째 수
+            // - Math.random() 함수는 0 이상 1 미만의 구간에서 근사적으로 균일한(approximately uniform) 부동소숫점 의사난수를 반환
+            // - Math.ceil() 함수는 주어진 숫자보다 크거나 같은 숫자 중 가장 작은 숫자를 정수로 반환 : 올림
+            // - Math.floor() 함수는 주어진 숫자와 같거나 작은 정수 중에서 가장 큰 수를 반환 : 내림
+            // - Math.round() 함수는 입력값을 반올림한 수와 가장 가까운 정수 값을 반환 : 반올림
+            value: "",
+            // 유저 입력 값
+            result: "",
+            // 유저 입력에 대한 결과 값
+          };
         }
-        return (
-          <button
-            onClick={() => {
-              setLiked(true);
-            }}
-          >
-            Like
-          </button>
-        );
+        render() {
+          console.log(this.state.value);
+
+          return (
+            <div>
+              {this.state.first} ｘ {this.state.second} ＝ ？
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  // submit 제출과 함께 result가 새로고침 되어 보이지 않는 것을 방지
+                  if (
+                    parseInt(this.state.value) ===
+                    this.state.first * this.state.second
+                  ) {
+                    this.setState({
+                      first: Math.ceil(Math.random() * 9),
+                      second: Math.ceil(Math.random() * 9),
+                      value: "",
+                      result: "✅ 정답!",
+                    });
+                  } else {
+                    this.setState({
+                      first: Math.ceil(Math.random() * 9),
+                      second: Math.ceil(Math.random() * 9),
+                      value: "",
+                      result: "💥 땡",
+                    });
+                  }
+                }}
+              >
+                <input
+                  type="number"
+                  value={this.state.value}
+                  onChange={(e) => this.setState({ value: e.target.value })}
+                />
+                <button>입력</button>
+              </form>
+              <div>{this.state.result}</div>
+            </div>
+          );
+        }
       }
     </script>
     <script type="text/babel">
-      // ReactDOM.render(<LikeButton />, document.querySelector('#root')) // React 17 버전
-      ReactDOM.createRoot(document.querySelector("#root")).render(
-        <LikeButton />
-      );
-      // Component root안에 그린다는 뜻
-      // JSX는 React.createElement(Component)을 <Component/>으로 바꿔쓸 수 있다
+      ReactDOM.createRoot(document.querySelector("#root")).render(<GuGuDan />);
     </script>
   </body>
 </html>
