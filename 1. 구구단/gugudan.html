@@ -47,8 +47,6 @@
           };
         }
         render() {
-          console.log(this.state.value);
-
           return (
             <div>
               {this.state.first} ｘ {this.state.second} ＝ ？
@@ -83,7 +81,11 @@
                 />
                 <button>입력</button>
               </form>
-              <div>{this.state.result}</div>
+              {this.state.result ? (
+                <div>{this.state.result}</div>
+              ) : (
+                <div>🎼 구구단을 외자 🎶</div>
+              )}
             </div>
           );
         }
