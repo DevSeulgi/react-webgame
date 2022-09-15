@@ -74,7 +74,7 @@
 
         render() {
           return (
-            <div>
+            <React.Fragment>
               {this.state.first} ｘ {this.state.second} ＝ ？
               <form onSubmit={this.onSubmit}>
                 <input
@@ -89,7 +89,7 @@
               ) : (
                 <div>🎼 구구단을 외자 🎶</div>
               )}
-            </div>
+            </React.Fragment>
           );
         }
       }
