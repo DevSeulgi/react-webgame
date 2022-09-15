@@ -1,5 +1,5 @@
 # react-webgame [![GitHub latest commit](https://img.shields.io/github/last-commit/DevSeulgi/react-webgame)](https://github.com/DevSeulgi/react-webgame/commit)
-웹 게임을 만들며 배우는 React 실습
+웹 게임을 만들며 배우는 React ⚛️
 
 ## 📜 index
 - [x] [1. 9️⃣ 구구단](https://github.com/DevSeulgi/react-webgame#1-9%EF%B8%8F%E2%83%A3-%EA%B5%AC%EA%B5%AC%EB%8B%A8)
@@ -10,6 +10,8 @@
 - [ ] [6. 🎱 로또 추첨기](https://github.com/DevSeulgi/react-webgame#6--로또-추첨기)
 - [ ] [7. ❎ 틱택토](https://github.com/DevSeulgi/react-webgame#7--틱택토)
 - [ ] [8. 💥 지뢰찾기](https://github.com/DevSeulgi/react-webgame#8--지뢰찾기)
+
+</br>
 
 ## 1. 9️⃣ 구구단
 <p>

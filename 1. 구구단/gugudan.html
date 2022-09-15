@@ -46,38 +46,41 @@
             // 유저 입력에 대한 결과 값
           };
         }
+
+        onSubmit = (e) => {
+          e.preventDefault();
+          // submit 제출과 함께 result가 새로고침 되어 보이지 않는 것을 방지
+          if (
+            parseInt(this.state.value) ===
+            this.state.first * this.state.second
+          ) {
+            this.setState({
+              first: Math.ceil(Math.random() * 9),
+              second: Math.ceil(Math.random() * 9),
+              value: "",
+              result: "✅ 정답!",
+            });
+          } else {
+            this.setState({
+              first: Math.ceil(Math.random() * 9),
+              second: Math.ceil(Math.random() * 9),
+              value: "",
+              result: "💥 땡",
+            });
+          }
+        };
+
+        onChange = (e) => this.setState({ value: e.target.value });
+
         render() {
           return (
             <div>
               {this.state.first} ｘ {this.state.second} ＝ ？
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  // submit 제출과 함께 result가 새로고침 되어 보이지 않는 것을 방지
-                  if (
-                    parseInt(this.state.value) ===
-                    this.state.first * this.state.second
-                  ) {
-                    this.setState({
-                      first: Math.ceil(Math.random() * 9),
-                      second: Math.ceil(Math.random() * 9),
-                      value: "",
-                      result: "✅ 정답!",
-                    });
-                  } else {
-                    this.setState({
-                      first: Math.ceil(Math.random() * 9),
-                      second: Math.ceil(Math.random() * 9),
-                      value: "",
-                      result: "💥 땡",
-                    });
-                  }
-                }}
-              >
+              <form onSubmit={this.onSubmit}>
                 <input
                   type="number"
                   value={this.state.value}
-                  onChange={(e) => this.setState({ value: e.target.value })}
+                  onChange={this.onChange}
                 />
                 <button>입력</button>
               </form>
