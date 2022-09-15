@@ -29,24 +29,23 @@
       "use strict";
 
       class GuGuDan extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = {
-            first: Math.ceil(Math.random() * 9),
-            // 첫번째 수
-            second: Math.ceil(Math.random() * 9),
-            // 두번째 수
-            // - Math.random() 함수는 0 이상 1 미만의 구간에서 근사적으로 균일한(approximately uniform) 부동소숫점 의사난수를 반환
-            // - Math.ceil() 함수는 주어진 숫자보다 크거나 같은 숫자 중 가장 작은 숫자를 정수로 반환 : 올림
-            // - Math.floor() 함수는 주어진 숫자와 같거나 작은 정수 중에서 가장 큰 수를 반환 : 내림
-            // - Math.round() 함수는 입력값을 반올림한 수와 가장 가까운 정수 값을 반환 : 반올림
-            value: "",
-            // 유저 입력 값
-            result: "",
-            // 유저 입력에 대한 결과 값
-          };
-        }
+        // constructor와 super를 없앨 경우 this.state가 아닌 state로 선언
+        state = {
+          first: Math.ceil(Math.random() * 9),
+          // 첫번째 수
+          second: Math.ceil(Math.random() * 9),
+          // 두번째 수
+          // - Math.random() 함수는 0 이상 1 미만의 구간에서 근사적으로 균일한(approximately uniform) 부동소숫점 의사난수를 반환
+          // - Math.ceil() 함수는 주어진 숫자보다 크거나 같은 숫자 중 가장 작은 숫자를 정수로 반환 : 올림
+          // - Math.floor() 함수는 주어진 숫자와 같거나 작은 정수 중에서 가장 큰 수를 반환 : 내림
+          // - Math.round() 함수는 입력값을 반올림한 수와 가장 가까운 정수 값을 반환 : 반올림
+          value: "",
+          // 유저 입력 값
+          result: "",
+          // 유저 입력에 대한 결과 값
+        };
 
+        // 함수형 선언 시 this의 의미가 달라지기 때문에 무조건 화살표 함수 선언
         onSubmit = (e) => {
           e.preventDefault();
           // submit 제출과 함께 result가 새로고침 되어 보이지 않는 것을 방지
@@ -54,11 +53,19 @@
             parseInt(this.state.value) ===
             this.state.first * this.state.second
           ) {
-            this.setState({
-              first: Math.ceil(Math.random() * 9),
-              second: Math.ceil(Math.random() * 9),
-              value: "",
-              result: "✅ 정답!",
+            this.setState((prevState) => {
+              return {
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value: "",
+                result:
+                  prevState.first +
+                  "ｘ" +
+                  prevState.second +
+                  "＝" +
+                  prevState.value +
+                  " ✅ 정답!",
+              };
             });
           } else {
             this.setState({
@@ -67,18 +74,26 @@
               value: "",
               result: "💥 땡",
             });
+            this.input.focus();
           }
         };
 
         onChange = (e) => this.setState({ value: e.target.value });
 
+        onRefInput = (c) => {
+          this.input = c;
+        };
+
+        // render는 state가 변경될때 마다 실행되기 때문에 그 때 마다의 함수 렌더는 불필요하므로 분리
+
         render() {
           return (
-            <div>
+            <React.Fragment>
               {this.state.first} ｘ {this.state.second} ＝ ？
               <form onSubmit={this.onSubmit}>
                 <input
                   type="number"
+                  ref={this.onRefInput}
                   value={this.state.value}
                   onChange={this.onChange}
                 />
@@ -89,7 +104,7 @@
               ) : (
                 <div>🎼 구구단을 외자 🎶</div>
               )}
-            </div>
+            </React.Fragment>
           );
         }
       }
