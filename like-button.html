@@ -34,38 +34,65 @@ react로 programming을 하더라도 결과물은 JS와 html이어야 한다. --
 
       // component는 데이터와 화면을 하나로 묶어둔 덩어리를 뜻 함
 
-      class LikeButton extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = { liked: false };
-          // state가 데이터 부분에 해당 ( 화면에 바뀔 부분 )
-        }
-        render() {
-          if (this.state.liked) {
-            return "You liked this";
-          }
-          // 화면은 render의 return부분에 해당
-          // react가 해결하고자 했던 것? 데이터와 화면의 일치! > 데이터가 바뀌면 화면은 자동으로 바뀌게 되어 있음
+      // class LikeButton extends React.Component {
+      //   constructor(props) {
+      //     super(props);
+      //     this.state = { liked: false }; // state가 데이터 부분에 해당 ( 화면에 바뀔 부분 )
+      //   }
+      //   render() {
+      //     if (this.state.liked) {
+      //       return "You liked this";
+      //     }
+      // 화면은 render의 return부분에 해당
+      // react가 해결하고자 했던 것? 데이터와 화면의 일치! > 데이터가 바뀌면 화면은 자동으로 바뀌게 되어 있음
 
-          // return React.createElement(
-          //   "button",
-          //   { onClick: () => this.setState({ liked: true }) },
-          //   "Like"
-          // );
+      // return React.createElement(
+      //   "button",
+      //   { onClick: () => this.setState({ liked: true }) },
+      //   "Like"
+      // );
 
-          // 복잡성 down 가독성 up을 위한 JSX 👇
-          return (
-            <button onClick={() => this.setState({ liked: true })}>Like</button>
-            // 💡 onClick에 화살표 함수 쓰는 이유 알아보기
-            // addEventListener('click', ()=> this.setState({liked:true}))
-          );
-          // script내에 이런 형태의 문법은 사용할 수 없음 스크린샷참조 'Uncaught SyntaxError: Unexpected token '<''
-          // 이를 도와주는게 바벨 라이브러리 React.createElement로 대체해줌
-        }
-      }
+      // const array = [];
+      // pop, push, shift, unshift, splice > 배열을 직접적으로 수정
+      // concat, slice > 새로운 배열을 만들어 냄
+      // 💡 React는 객체를 함부로 바꾸면 안 됨(불변성), 배열, 함수도 객체 > 복사해서 사용하자.
+
+      // chrome web store에서 React Developer Tools 설치 시 개발자도구에서 component 상태 체크 가능
+      // https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en
+
+      // 복잡성 down 가독성 up을 위한 JSX 👇
+      //     return (
+      //       <button onClick={() => this.setState({ liked: true })}>Like</button>
+      //       // 💡 onClick에 화살표 함수 쓰는 이유 알아보기
+      //       // addEventListener('click', ()=> this.setState({liked:true}))
+      //     );
+      //     // script내에 이런 형태의 문법은 사용할 수 없음 스크린샷참조 'Uncaught SyntaxError: Unexpected token '<''
+      //     // 이를 도와주는게 바벨 라이브러리 React.createElement로 대체해줌
+      //   }
+      // }
 
       // const LikeButton = () => {};
       // function LikeButton() {}
+
+      // 함수 컴포넌트
+
+      function LikeButton() {
+        console.log("liked", liked);
+
+        const [liked, setLiked] = React.useState(false);
+        if (liked) {
+          return "You liked this";
+        }
+        return (
+          <button
+            onClick={() => {
+              setLiked(true);
+            }}
+          >
+            Like
+          </button>
+        );
+      }
     </script>
     <script type="text/babel">
       // ReactDOM.render(<LikeButton />, document.querySelector('#root')) // React 17 버전
